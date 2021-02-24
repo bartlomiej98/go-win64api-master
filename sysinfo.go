@@ -511,7 +511,7 @@ func GetSystemProfile() (so.Hardware, so.OperatingSystem, so.Memory, []so.Disk, 
 
 	// Query 7 - Logical Disk information.
 	err = func() error {
-		resultRaw, err := oleutil.CallMethod(service, "ExecQuery", "SELECT Name, DriveType, FreeSpace, Size, FileSystem FROM Win32_LogicalDisk WHERE DriveType=3")
+		resultRaw, err := oleutil.CallMethod(service, "ExecQuery", "SELECT Name, DriveType, FreeSpace, Size, FileSystem, VolumeSerialNumber FROM Win32_LogicalDisk WHERE DriveType=3")
 		if err != nil {
 			return fmt.Errorf("Unable to execute query while getting Logical Disk info. %s", err.Error())
 		}
@@ -545,6 +545,12 @@ func GetSystemProfile() (so.Hardware, so.OperatingSystem, so.Memory, []so.Disk, 
 					return fmt.Errorf("Error while getting property File System from Logical Disk info. %s", err.Error())
 				}
 				retDR.FileSystem = resFileSystem.ToString()
+
+				resVolumeSerialNumber, err := oleutil.GetProperty(item, "VolumeSerialNumber")
+				if err != nil {
+					return fmt.Errorf("Error while getting property Volume Serial Number from Logical Disk info. %s", err.Error())
+				}
+				retDR.VolumeSerialNumber = resVolumeSerialNumber.ToString()
 
 				resTotalSize, err := oleutil.GetProperty(item, "Size")
 				if err != nil {

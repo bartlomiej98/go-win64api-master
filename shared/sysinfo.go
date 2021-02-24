@@ -53,6 +53,7 @@ type Disk struct {
 	TotalSize             uint64               `json:"TotalSize"`
 	Available             uint64               `json:"FreeSpace"`
 	FileSystem            string               `json:"FileSystem"`
+	VolumeSerialNumber    string               `json:"VolumeSerialNumber"`
 	BitLockerEnabled      bool                 `json:"BitLockerEnabled"`
 	BitLockerEncrypted    bool                 `json:"BitLockerEncrypted"`
 	BitLockerRecoveryInfo *BitLockerDeviceInfo `json:"BitLockerRecoveryInfo,omitempty"`
