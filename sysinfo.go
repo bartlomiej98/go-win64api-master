@@ -352,7 +352,7 @@ func GetSystemProfile() (so.Hardware, so.OperatingSystem, so.Memory, []so.Disk, 
 						return fmt.Errorf("Error parsing InstallDate: %s", err)
 					}
 				} else {
-					return fmt.Errorf("Error asserting InstallDate as string from Operating System Info. Got type %s", reflect.TypeOf(resFreePageFile.Value()).Name())
+					return fmt.Errorf("Error asserting Install Date as string from Operating System Info. Got type %s", reflect.TypeOf(resFreePageFile.Value()).Name())
 				}
 			}
 
