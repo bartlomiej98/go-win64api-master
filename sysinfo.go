@@ -218,7 +218,7 @@ func GetSystemProfile() (so.Hardware, so.OperatingSystem, so.Memory, []so.Disk, 
 
 	// Query 4 - Operating System information.
 	err = func() error {
-		resultRaw, err := oleutil.CallMethod(service, "ExecQuery", "SELECT Caption, Version, OSArchitecture, OSLanguage, TotalVisibleMemorySize, FreePhysicalMemory, TotalVirtualMemorySize, FreeVirtualMemory, LastBootUpTime FROM Win32_OperatingSystem")
+		resultRaw, err := oleutil.CallMethod(service, "ExecQuery", "SELECT Caption, Version, OSArchitecture, OSLanguage, TotalVisibleMemorySize, FreePhysicalMemory, TotalVirtualMemorySize, FreeVirtualMemory, LastBootUpTime, InstallDate FROM Win32_OperatingSystem")
 		if err != nil {
 			return fmt.Errorf("Unable to execute query while getting Operating System info. %s", err.Error())
 		}
@@ -340,6 +340,22 @@ func GetSystemProfile() (so.Hardware, so.OperatingSystem, so.Memory, []so.Disk, 
 					return fmt.Errorf("Error asserting LastBootUpTime as string from Operating System Info. Got type %s", reflect.TypeOf(resFreePageFile.Value()).Name())
 				}
 			}
+
+			resInstallDate, err := oleutil.GetProperty(item, "InstallDate")
+			if err != nil {
+				return fmt.Errorf("Error while getting property InstallDate from Operating System info. %s", err.Error())
+			}
+			if resInstallDate.Value() != nil {
+				if resInstallDate, ok := resInstallDate.Value().(string); ok {
+					retOS.InstallDate, err = ConvertWMITime(resInstallDate)
+					if err != nil {
+						return fmt.Errorf("Error parsing InstallDate: %s", err)
+					}
+				} else {
+					return fmt.Errorf("Error asserting InstallDate as string from Operating System Info. Got type %s", reflect.TypeOf(resFreePageFile.Value()).Name())
+				}
+			}
+
 		}
 		return nil
 	}()
