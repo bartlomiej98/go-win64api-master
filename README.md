@@ -5,7 +5,7 @@ For an internal project, this is a set of wrappers for snippets of the Windows A
 Tested and developed for Windows 10 x64.
 
 All functions that return useful data, do so in the form of JSON exportable structs.
-## Forked from: iamacarpet/go-win64api
+## Forked from: github.com/iamacarpet/go-win64api
 These structs are available in the shared library, "github.com/iamacarpet/go-win64api/shared"
 
 ### Process List
