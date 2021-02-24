@@ -8,7 +8,7 @@ import (
 	"time"
 	"unsafe"
 
-	so "github.com/bartlomiej98/go-win64api/shared"
+	so "github.com/bartlomiej98/win64api-go/shared"
 	"golang.org/x/sys/windows"
 	"golang.org/x/sys/windows/svc"
 	"golang.org/x/sys/windows/svc/mgr"

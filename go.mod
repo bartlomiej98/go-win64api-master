@@ -1,4 +1,4 @@
-module github.com/bartlomiej98/go-win64api
+module github.com/bartlomiej98/win64api-go
 
 go 1.13
 
